@@ -1,6 +1,6 @@
 # Steckbrief Persona
 
-<img src="Bild_Lena_Fischer.jpg" alt="Lena Fischer" width="300">
+<img src="Fotos/Bild_Lena_Fischer.jpg" alt="Lena Fischer" width="300">
 
 - **Name**: Lena Fischer
 - **Wohnort**: Zürich
