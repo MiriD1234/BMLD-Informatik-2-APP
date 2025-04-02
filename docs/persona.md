@@ -1,4 +1,7 @@
 # Steckbrief Persona
+
+![Lena Fischer](Bild_Lena_Fischer.jpg)
+
 - **Name**: Lena Fischer
 - **Wohnort**: Zürich
 - **Haarfarbe**: Braun
