@@ -1,6 +1,7 @@
 # Steckbrief Persona
 
 <img src="Fotos/Bild_Lena_Fischer.jpg" alt="Lena Fischer" width="300">
+(Bild mit ChatGPT anhand einer Personenbeschreibung generiert)
 
 - **Name**: Lena Fischer
 - **Wohnort**: Zürich
