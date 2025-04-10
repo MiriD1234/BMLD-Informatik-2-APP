@@ -6,7 +6,7 @@ Formel:(aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) * 
 # V2.0 + Datenspeicherung auf SwitchDrive
 - aktueller Blutzuckerwert erfassen, Blutzuckerwert nacherfassen
 - Grafische Darstellung der Blutzuckerwerte
-- Warnhinweise zu Blutzuckerwerten (zu hoch-> direkte Verknüpfung mit Button zum Insulinbolus-Rechner, zu tief -> Essensvorschläge)
+- Warnhinweise zu Blutzuckerwerten (zu hoch-> direkte Verknüpfung mit Button zum Insulinbolus-Rechner, zu tief -> Hinweis)
 - Grafische Darstellung der Insulindosen
 - HbA1c berechnen: Formel (Durchschnittlicher BZ der letzten 3 Monate + 2.59) / 1.59 = HbA1c in %
 
