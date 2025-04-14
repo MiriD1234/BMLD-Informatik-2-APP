@@ -45,8 +45,8 @@ if berechnen:
     
     except ValueError as e:
         st.error(f"Fehler: {e}")
-
-# update data in session state and save to persistent storage
-DataManager().append_record(session_state_key='data_df', record_dict=result_dict)
+    # update data in session state and save to persistent storage
+    from utils.data_manager import DataManager
+    DataManager().append_record(session_state_key='data_df', record_dict=result_dict)
     
 st.markdown("---")
