@@ -1,3 +1,8 @@
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+LoginManager().go_to_login('Start.py') 
+# ====== End Login Block ======
+
 import streamlit as st
 from functions.Insulinbolus import (berechne_korrektur_bolus, berechne_mahlzeiten_bolus, berechne_gesamt_bolus)
 
