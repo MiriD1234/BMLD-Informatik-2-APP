@@ -1,3 +1,5 @@
+from utils import helpers
+
 def berechne_korrektur_bolus(aktueller_wert, zielwert, korrekturfaktor):
     if korrekturfaktor <= 0:
         raise ValueError("Bolusfaktor muss größer als 0 sein.")
@@ -13,3 +15,7 @@ def berechne_mahlzeiten_bolus(kohlenhydrate, bolusfaktor):
 def berechne_gesamt_bolus(korrektur_bolus, mahlzeiten_bolus, aktives_insulin):
     gesamt = korrektur_bolus + mahlzeiten_bolus - aktives_insulin
     return max(0, gesamt)
+
+def berechne_gerundeter_gesamt_bolus(gesamt_bolus, minimaler_bolusschritt):
+    result = round(gesamt_bolus / minimaler_bolusschritt) * minimaler_bolusschritt
+    return {"timestamp": helpers.ch_now(), "bolus": result}
