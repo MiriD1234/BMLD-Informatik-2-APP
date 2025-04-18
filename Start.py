@@ -12,11 +12,12 @@ login_manager.login_register()  # open login/register page
 
 # load the data from the persistent storage into the session state
 data_manager.load_user_data(
-    session_state_key='data_df', 
-    file_name='data.csv', 
-    initial_value = pd.DataFrame(), 
-    parse_dates = ['timestamp']
+    session_state_key="dosis_erfassung",
+    file_name="dosis_erfassung.csv",
+    initial_value=pd.DataFrame(),
+    parse_dates=["timestamp"],
     )
+
 # ====== End Init Block ======
 
 import streamlit as st
