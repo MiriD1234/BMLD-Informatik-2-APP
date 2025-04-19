@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 
 # Start Rechner
 
-st.title("💉 Insulin-Bolus-Rechner")
+st.title("💉 Insulinbolus-Rechner")
 
 data_manager = DataManager()
 
