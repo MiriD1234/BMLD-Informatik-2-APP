@@ -1,4 +1,5 @@
 from utils import helpers
+from datetime import datetime
 
 def berechne_korrektur_bolus(aktueller_wert, zielwert, korrekturfaktor):
     if korrekturfaktor <= 0:
@@ -44,3 +45,16 @@ def berechne_gerundeter_gesamt_bolus(gesamt_bolus, minimaler_bolusschritt):
         "minimaler_bolusschritt": minimaler_bolusschritt,
         "gerundeter_gesamt_bolus": result,
     }
+
+def get_bolusfaktor_for_current_time(zeitfenster_bolusfaktoren):
+    """
+    Wählt den passenden Bolusfaktor basierend auf der aktuellen Uhrzeit aus den definierten Zeitfenstern.
+    """
+    current_time = datetime.now().time()
+    for zeitfenster, bolusfaktor in zeitfenster_bolusfaktoren.items():
+        start, end = zeitfenster.split("-")
+        start_time = datetime.strptime(start, "%H:%M").time()
+        end_time = datetime.strptime(end, "%H:%M").time()
+        if start_time <= current_time <= end_time:
+            return bolusfaktor
+    raise ValueError("Kein passender Bolusfaktor für die aktuelle Uhrzeit gefunden.")

@@ -11,8 +11,10 @@ from functions.Insulinbolus import (
     berechne_korrektur_bolus,
     berechne_mahlzeiten_bolus,
     berechne_gesamt_bolus,
-    berechne_gerundeter_gesamt_bolus
+    berechne_gerundeter_gesamt_bolus,
+    get_bolusfaktor_for_current_time  # Import der neuen Funktion
 )
+from datetime import datetime
 
 st.title("💉 Insulin-Bolus-Rechner")
 
@@ -21,14 +23,21 @@ data_manager = DataManager()
 data_manager.load_user_data(
     session_state_key="user_settings",
     file_name="einstellungen.json",
-    initial_value={"zielwert": 5.5, "korrekturfaktor": 1.5, "bolusfaktor": 1.0}
+    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1}
 )
 
 einstellungen = st.session_state["user_settings"]
 zielwert = einstellungen["zielwert"]
 korrekturfaktor = einstellungen["korrekturfaktor"]
-bolusfaktor = einstellungen["bolusfaktor"]
 minimaler_bolusschritt = einstellungen["minimaler_bolusschritt"]
+
+# Bolusfaktor basierend auf der aktuellen Uhrzeit auswählen
+zeitfenster_bolusfaktoren = einstellungen.get("zeitfenster_bolusfaktoren", {})
+try:
+    bolusfaktor = get_bolusfaktor_for_current_time(zeitfenster_bolusfaktoren)
+except ValueError as e:
+    st.error(str(e))
+    bolusfaktor = 0  # Fallback, falls kein Bolusfaktor gefunden wird
 
 col1, col2 = st.columns(2)
 
