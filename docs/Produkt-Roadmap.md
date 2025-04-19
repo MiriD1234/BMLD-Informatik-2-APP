@@ -1,6 +1,6 @@
 # 1️⃣ V1.0 Insulinbolus-Rechner
 - Eingabe persönliche Korrektur-/Bolusfaktoren in Einstellungen *(Aufwand: 4h)*
-- Insulinbolus-Rechner *(Aufwand: 3h)*
+- Insulinbolus-Rechner *(Aufwand: 4h)*
     - Formel: (aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) * Bolusfaktor - aktives Insulin = Bolusvorschlag
 - Datenspeicherung auf SwitchDrive, User Login und Multi-User *(Aufwand: 2h)*
 
