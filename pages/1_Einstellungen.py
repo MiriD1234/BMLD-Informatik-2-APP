@@ -15,7 +15,7 @@ data_manager = DataManager()
 data_manager.load_user_data(
     session_state_key="user_settings",
     file_name="einstellungen.json",
-    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1}
+    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1, "wirkdauer_insulin": 4}
 )
 
 # Zugriff auf die gespeicherten Werte
@@ -38,6 +38,14 @@ bolusfaktor_2 = st.number_input("Bolusfaktor für 11:00-16:59 Uhr (IE pro 10g KH
 # Zeitfenster 3: 17:00-23:59
 bolusfaktor_3 = st.number_input("Bolusfaktor für 17:00-23:59 Uhr (IE pro 10g KH)", value=user_settings.get("zeitfenster_bolusfaktoren", {}).get("17:00-23:59", 1.0), step=0.1)
 
+# Eingabefeld für die Wirkdauer des Insulins
+st.subheader("Wirkdauer des Insulins")
+wirkdauer_insulin = st.number_input(
+    "Wirkdauer Insulin in Stunden", 
+    value=user_settings.get("wirkdauer_insulin", 4),  # Standardwert: 4 Stunden
+    step=1
+)
+
 # Speichern der Einstellungen
 if st.button("💾 Speichern"):
     st.session_state["user_settings"] = {
@@ -48,7 +56,8 @@ if st.button("💾 Speichern"):
             "00:00-10:59": round(bolusfaktor_1, 1),
             "11:00-16:59": round(bolusfaktor_2, 1),
             "17:00-23:59": round(bolusfaktor_3, 1),
-        }
+        },
+        "wirkdauer_insulin": wirkdauer_insulin 
     }
 
     data_manager.save_data("user_settings")
