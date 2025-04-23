@@ -1,9 +1,9 @@
 ## MVP Reflexion
 ### Konnte das MVP (V1.0) wie geplant umgesetzt werden?
-Ja, die MVP konnte nach unserer Vorstellung umgesetzt werden. Dadurch, dass die Funktion des Rechners eher kompliziert ist und viele Faktoren berücksichtigen muss, war dies jedoch anspruchsvoller als wir zuvor gedacht hatten. Entsprechend hat dies mehr Zeit in Anspruch genommen als geplant.
+Ja, die MVP konnte nach unserer Vorstellung umgesetzt werden. Das Programmieren nahm aufgrund der Komplexität der Funktionen des Rechners deutlich mehr Zeit in Anspruch als vorgesehen. Wir wollten unter Anderem individuelle User Einstellungen bzgl. Bolus speichern können, ohne diese jedes Mal erneut erfassen zu müssen. Dieser Schritt hat viel Zeit und Mühe gekostet, konnte aber schlussendlich erfolgreich umgesetzt werden.
 ### Was konnte nicht umgesetzt werden und warum?
-Bis jetzt konnte alles umgesetzt werden.
+Wir konnten alle Ziele umsetzen.
 ### Müssen wir die Roadmap anpassen und falls ja, wie?
-Nein.
+Nein, zu diesem Zeitpunkt müssen keine Anpassungen vorgenommen werden.
 ### Welche Unterstützung brauchen wir, um unsere Ziele zu erreichen?
-Aktuell brauchen wir keine Unterstützung.
+Aktuell benötigen wir keine Unterstützung.
