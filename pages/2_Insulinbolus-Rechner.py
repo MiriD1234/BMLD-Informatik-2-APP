@@ -12,23 +12,26 @@ from functions.Insulinbolus import (
     berechne_mahlzeiten_bolus,
     berechne_gesamt_bolus,
     berechne_gerundeter_gesamt_bolus,
-    get_bolusfaktor_for_current_time  # Import der neuen Funktion
+    get_bolusfaktor_for_current_time,
+    lade_einstellungen,  
+    berechne_aktives_insulin  
 )
 from datetime import datetime, timedelta
 
-# Start Rechner
-
-st.title("💉 Insulinbolus-Rechner")
-
+# Erstelle eine Instanz von DataManager
 data_manager = DataManager()
 
-data_manager.load_user_data(
-    session_state_key="user_settings",
-    file_name="einstellungen.json",
-    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1, "wirkdauer_insulin": 4}
-)
+# Standardwerte für die Einstellungen
+default_settings = {
+    "zielwert": 5.5,
+    "korrekturfaktor": 0.0,
+    "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0},
+    "minimaler_bolusschritt": 0.1,
+    "wirkdauer_insulin": 4
+}
 
-einstellungen = st.session_state["user_settings"]
+# Einstellungen laden
+einstellungen = lade_einstellungen(st.session_state, default_settings)
 zielwert = einstellungen["zielwert"]
 korrekturfaktor = einstellungen["korrekturfaktor"]
 minimaler_bolusschritt = einstellungen["minimaler_bolusschritt"]
@@ -42,30 +45,11 @@ except ValueError as e:
     bolusfaktor = 0  # Fallback, falls kein Bolusfaktor gefunden wird
 
 # Wirkdauer des Insulins aus den Einstellungen laden
-wirkdauer_insulin = einstellungen.get("wirkdauer_insulin", 4)  # Standardwert: 4 Stunden
+wirkdauer_insulin = einstellungen.get("wirkdauer_insulin", 4)
 
-# Berechnung des aktiven Insulins basierend auf der letzten Dosis
+# Berechnung des aktiven Insulins
 letzte_dosis_df = st.session_state.get("dosis_erfassung", pd.DataFrame())
-
-# Überprüfen, ob der DataFrame nicht leer ist
-if not letzte_dosis_df.empty:
-    # Letzte Zeile des DataFrames abrufen
-    letzte_dosis = letzte_dosis_df.iloc[-1]
-    
-    # Prüfen, ob der Timestamp bereits ein datetime-Objekt ist
-    if isinstance(letzte_dosis["timestamp"], pd.Timestamp):
-        letzte_dosis_zeitpunkt = letzte_dosis["timestamp"].to_pydatetime()  # In datetime umwandeln
-    else:
-        letzte_dosis_zeitpunkt = datetime.strptime(letzte_dosis["timestamp"], "%Y-%m-%d %H:%M:%S")
-    
-    zeit_seit_letzter_dosis = datetime.now() - letzte_dosis_zeitpunkt
-
-    if zeit_seit_letzter_dosis > timedelta(hours=wirkdauer_insulin):
-        aktives_insulin = 0  # Insulin ist nicht mehr aktiv
-    else:
-        aktives_insulin = letzte_dosis["gerundeter_gesamt_bolus"]  # Verwende die letzte Dosis
-else:
-    aktives_insulin = 0  # Keine Dosis erfasst, daher kein aktives Insulin
+aktives_insulin = berechne_aktives_insulin(letzte_dosis_df, wirkdauer_insulin)
 
 col1, col2 = st.columns(2)
 
@@ -119,7 +103,7 @@ if berechnen:
         st.write(f"Korrektur-Bolus: {korrektur_bolus_data['korrektur_bolus']:.2f} IE")
         st.write(f"Mahlzeiten-Bolus: {mahlzeiten_bolus_data['mahlzeiten_bolus']:.2f} IE")
         st.write(f"Gesamt-Bolus (ungerundet): {gesamt_bolus_data['gesamt_bolus']:.2f} IE")
-        st.write(f"**Gesamt-Bolus (gerundet): {gesamt_bolus_gerundet_data['gerundeter_gesamt_bolus']:.2f} IE**")
+        st.write(f"**Bolus-Vorschlag: {gesamt_bolus_gerundet_data['gerundeter_gesamt_bolus']:.2f} IE**")
 
         if gesamt_bolus_gerundet_data["gerundeter_gesamt_bolus"] > 15:
             st.warning("⚠️ Achtung: Der berechnete Bolus ist ungewöhnlich hoch. Bitte Eingaben prüfen.")

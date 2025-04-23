@@ -7,22 +7,25 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from utils.data_manager import DataManager
+from functions.Blutzuckertagebuch import (
+    load_blutzuckertagebuch,
+    save_blutzuckertagebuch,
+    add_entry,
+    add_manual_entry,
+    check_blutzuckerwert,
+)
 
 st.title("📖 Blutzuckertagebuch")
 
 # Initialisiere den DataManager
 data_manager = DataManager()
 
-# Lade das Blutzuckertagebuch aus der persistenten Speicherung
-data_manager.load_user_data(
-    session_state_key="Blutzuckertagebuch",
-    file_name="blutzuckertagebuch.csv",
-    initial_value=pd.DataFrame(columns=["timestamp", "blutzuckerwert"]),
-    parse_dates=["timestamp"],
+# Lade das Blutzuckertagebuch
+tagebuch_df = load_blutzuckertagebuch(
+    data_manager, 
+    session_state_key="Blutzuckertagebuch", 
+    file_name="blutzuckertagebuch.csv"
 )
-
-# Zugriff auf das Blutzuckertagebuch
-tagebuch_df = st.session_state["Blutzuckertagebuch"]
 
 # Eingabefeld zur Erfassung des aktuellen Blutzuckerwerts
 st.subheader("Aktuellen Blutzuckerwert erfassen")
@@ -31,14 +34,25 @@ with st.form("blutzuckertagebuch_form"):
     speichern = st.form_submit_button("Speichern")
 
 if speichern:
-    # Füge den neuen Eintrag mit Timestamp hinzu
-    neuer_eintrag = {"timestamp": datetime.now(), "blutzuckerwert": aktueller_blutzuckerwert}
-    tagebuch_df = pd.concat([tagebuch_df, pd.DataFrame([neuer_eintrag])], ignore_index=True)
-    
-    # Aktualisiere den Session State und speichere die Daten
-    st.session_state["Blutzuckertagebuch"] = tagebuch_df
-    data_manager.save_data("Blutzuckertagebuch")
+    tagebuch_df = add_entry(tagebuch_df, aktueller_blutzuckerwert)
+    save_blutzuckertagebuch(data_manager, tagebuch_df, "Blutzuckertagebuch")
     st.success("Eintrag erfolgreich gespeichert!")
+
+    # Zugriff auf die unteren und oberen Grenzen aus den Einstellungen
+    einstellungen = st.session_state.get("user_settings", {})
+    grenzen = (einstellungen.get("untere_grenze", 4.0), einstellungen.get("obere_grenze", 8.0))
+
+    # Vergleiche den aktuellen Wert mit den Grenzen
+    status = check_blutzuckerwert(grenzen, aktueller_blutzuckerwert)
+    if status == "low":
+        st.warning("⚠️ Der Blutzuckerwert ist zu niedrig. Nehmen Sie schnell wirkende Kohlenhydrate zu sich, z. B.: " \
+        "15 g Traubenzucker oder 1 Glas Fruchtsaft oder 1 kleines Glas Cola (kein „light“!)")
+        st.info("⏱️ Messen Sie Ihren Blutzucker nach 15 Minuten erneut.")
+    elif status == "high":
+        st.warning("⚠️ Der Blutzuckerwert ist zu hoch. 💉 Bitte prüfen Sie, ob eine Korrektur mit Insulin notwendig ist.")
+
+if st.button("Zum 🧮 Insulinbolus-Rechner"):
+    st.switch_page("pages/2_Insulinbolus-Rechner.py")
 
 # Eingabefeld zur Nacherfassung eines Blutzuckerwerts
 st.subheader("Blutzuckerwert nacherfassen")
@@ -49,16 +63,7 @@ with st.form("nacherfassung_form"):
     nacherfassen_speichern = st.form_submit_button("Nacherfassen")
 
 if nacherfassen_speichern:
-    # Kombiniere Datum und Uhrzeit zu einem Timestamp
-    nacherfassen_timestamp = datetime.combine(nacherfassen_datum, nacherfassen_uhrzeit)
-    neuer_eintrag = {"timestamp": nacherfassen_timestamp, "blutzuckerwert": nacherfassen_blutzuckerwert}
-    tagebuch_df = pd.concat([tagebuch_df, pd.DataFrame([neuer_eintrag])], ignore_index=True)
-    
-    # Sortiere den DataFrame nach Datum und Uhrzeit
-    tagebuch_df = tagebuch_df.sort_values(by="timestamp").reset_index(drop=True)
-    
-    # Aktualisiere den Session State und speichere die Daten
-    st.session_state["Blutzuckertagebuch"] = tagebuch_df
-    data_manager.save_data("Blutzuckertagebuch")
+    tagebuch_df = add_manual_entry(tagebuch_df, nacherfassen_blutzuckerwert, nacherfassen_datum, nacherfassen_uhrzeit)
+    save_blutzuckertagebuch(data_manager, tagebuch_df, "Blutzuckertagebuch")
     st.success("Nacherfassung erfolgreich gespeichert!")
 
