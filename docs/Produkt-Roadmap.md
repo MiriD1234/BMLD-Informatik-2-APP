@@ -9,9 +9,9 @@ Formel: (aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) *
 
 # 2️⃣ V2.0 Blutzuckertagebuch
 - aktueller Blutzuckerwert erfassen, Blutzuckerwert nacherfassen  
-*(geplant: 1h // effektiv 1.5h)*
+*(geplant: 1h // effektiv: 1.5h)*
 - Warnhinweise zu Blutzuckerwerten (zu hoch-> direkte Verknüpfung mit Button zum Insulinbolus-Rechner, zu tief -> Hinweis)  
-*(geplant: 0.5h // effektiv 1h)*
+*(geplant: 0.5h // effektiv: 1h)*
 - Grafische Darstellung der Blutzuckerwerte  
 *(geplant: 1h)*
 - Grafische Darstellung der verabreichten Insulindosen  
