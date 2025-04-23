@@ -2,8 +2,8 @@
 - Eingabe Einstellungen: persönliche Korrektur-/Bolusfaktoren, aktives Insulin anhand letzter Indulindosis aus DataFrame  
 *(geplant: 3h // effektiv: 5h)*
 - Insulinbolus-Rechner  
-*(geplant: 3h // effektiv: 5h)*
-    - Formel: (aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) * Bolusfaktor - aktives Insulin = Bolusvorschlag
+*(geplant: 3h // effektiv: 5h)*  
+Formel: (aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) * Bolusfaktor - aktives Insulin = Bolusvorschlag
 - Datenspeicherung auf SwitchDrive, User Login und Multi-User  
 *(geplant: 2h // effektiv: 3h)*
 
