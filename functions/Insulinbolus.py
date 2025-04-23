@@ -1,5 +1,6 @@
 from utils import helpers
-from datetime import datetime
+from datetime import datetime, timedelta
+import pandas as pd
 
 def berechne_korrektur_bolus(aktueller_wert, zielwert, korrekturfaktor):
     if korrekturfaktor <= 0:
@@ -58,3 +59,28 @@ def get_bolusfaktor_for_current_time(zeitfenster_bolusfaktoren):
         if start_time <= current_time <= end_time:
             return bolusfaktor
     raise ValueError("Kein passender Bolusfaktor für die aktuelle Uhrzeit gefunden.")
+
+def lade_einstellungen(session_state, default_settings):
+    """
+    Lädt die Benutzereinstellungen aus der Session State oder verwendet Standardwerte.
+    """
+    return session_state.get("user_settings", default_settings)
+
+def berechne_aktives_insulin(letzte_dosis_df, wirkdauer_insulin):
+    """
+    Berechnet das aktive Insulin basierend auf der letzten Dosis und der Wirkdauer.
+    """
+    if not letzte_dosis_df.empty:
+        letzte_dosis = letzte_dosis_df.iloc[-1]
+        if isinstance(letzte_dosis["timestamp"], pd.Timestamp):
+            letzte_dosis_zeitpunkt = letzte_dosis["timestamp"].to_pydatetime()
+        else:
+            letzte_dosis_zeitpunkt = datetime.strptime(letzte_dosis["timestamp"], "%Y-%m-%d %H:%M:%S")
+        
+        zeit_seit_letzter_dosis = datetime.now() - letzte_dosis_zeitpunkt
+
+        if zeit_seit_letzter_dosis > timedelta(hours=wirkdauer_insulin):
+            return 0  # Insulin ist nicht mehr aktiv
+        else:
+            return letzte_dosis["gerundeter_gesamt_bolus"]
+    return 0  # Keine Dosis erfasst, daher kein aktives Insulin
