@@ -127,5 +127,8 @@ if st.session_state.get("berechnung_durchgefuehrt", False):
             data_manager.append_record(session_state_key="dosis_erfassung", record_dict=st.session_state["berechnung_ergebnisse"])
             st.success("✅ Dosis erfolgreich erfasst!")
 
+if st.button("🏠 Home"):
+    st.switch_page("Start.py")
+
 
 

@@ -22,7 +22,7 @@ data_manager.load_user_data(
 
 import streamlit as st
 
-st.title("GlucoBuddy")
+st.image("docs/Fotos/Logo_Version_1.jpg", width=400)
 
 if st.button("📖 Blutzuckertagebuch"):
     st.switch_page("pages/3_Blutzuckertagebuch.py")

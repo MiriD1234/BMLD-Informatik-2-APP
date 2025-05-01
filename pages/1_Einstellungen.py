@@ -62,3 +62,6 @@ if st.button("💾 Speichern"):
 
     data_manager.save_data("user_settings")
     st.success("Einstellungen wurden gespeichert.")
+
+if st.button("🏠 Home"):
+    st.switch_page("Start.py")

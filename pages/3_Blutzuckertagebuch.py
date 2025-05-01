@@ -69,4 +69,6 @@ if nacherfassen:
     data_manager.append_record("Blutzuckertagebuch", neuer_eintrag)
     st.success("Nacherfassung erfolgreich gespeichert!")
 
+if st.button("🏠 Home"):
+    st.switch_page("Start.py")
 

@@ -73,3 +73,6 @@ else:
         st.plotly_chart(fig_dosen, use_container_width=True)
     except ValueError as e:
         st.warning(str(e))
+
+if st.button("🏠 Home"):
+    st.switch_page("Start.py")
