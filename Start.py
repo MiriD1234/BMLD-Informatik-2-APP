@@ -30,6 +30,9 @@ if st.button("📖 Blutzuckertagebuch"):
 if st.button("🧮 Insulinbolus-Rechner"):
     st.switch_page("pages/2_Insulinbolus-Rechner.py")
 
+if st.button("📈 Verlauf"):
+    st.switch_page("pages/4_Verlauf.py")
+
 if st.button("⚙️ Einstellungen"):
     st.switch_page("pages/1_Einstellungen.py")
 

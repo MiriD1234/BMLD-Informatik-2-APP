@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime
+import plotly.graph_objects as go
 
 def load_blutzuckertagebuch(data_manager, session_state_key, file_name):
     """Lädt das Blutzuckertagebuch aus der persistenten Speicherung."""
@@ -10,23 +11,10 @@ def load_blutzuckertagebuch(data_manager, session_state_key, file_name):
         parse_dates=["timestamp"],
     )
 
-def save_blutzuckertagebuch(data_manager, tagebuch_df, session_state_key):
-    """Speichert das Blutzuckertagebuch und aktualisiert den Session State."""
-    import streamlit as st
-    st.session_state[session_state_key] = tagebuch_df
-    data_manager.save_data(session_state_key)
-
-def add_entry(tagebuch_df, blutzuckerwert):
+def add_entry(data_manager, session_state_key, blutzuckerwert):
     """Fügt einen neuen Eintrag mit aktuellem Timestamp hinzu."""
     neuer_eintrag = {"timestamp": datetime.now(), "blutzuckerwert": blutzuckerwert}
-    return pd.concat([tagebuch_df, pd.DataFrame([neuer_eintrag])], ignore_index=True)
-
-def add_manual_entry(tagebuch_df, blutzuckerwert, datum, uhrzeit):
-    """Fügt einen manuell erfassten Eintrag hinzu."""
-    timestamp = datetime.combine(datum, uhrzeit)
-    neuer_eintrag = {"timestamp": timestamp, "blutzuckerwert": blutzuckerwert}
-    tagebuch_df = pd.concat([tagebuch_df, pd.DataFrame([neuer_eintrag])], ignore_index=True)
-    return tagebuch_df.sort_values(by="timestamp").reset_index(drop=True)
+    data_manager.append_record(session_state_key, neuer_eintrag)
 
 def check_blutzuckerwert(grenzen, aktueller_wert):
     """Prüft, ob der Blutzuckerwert innerhalb der Grenzen liegt."""
@@ -36,3 +24,48 @@ def check_blutzuckerwert(grenzen, aktueller_wert):
     elif aktueller_wert > obere_grenze:
         return "high"
     return "normal"
+
+def classify_wert(wert, untere_grenze, obere_grenze):
+    """Klassifiziert den Blutzuckerwert in einen Bereich."""
+    if wert < untere_grenze:
+        return 'Unterzucker'
+    elif wert > obere_grenze:
+        return 'Überzucker'
+    else:
+        return 'Zielbereich'
+
+def create_blutzucker_figure(data_df, untere_grenze, obere_grenze):
+    """Erstellt die interaktive Blutzuckergrafik."""
+    farben = {'Unterzucker': 'blue', 'Zielbereich': 'green', 'Überzucker': 'red'}
+    data_df['bereich'] = data_df['blutzuckerwert'].apply(lambda wert: classify_wert(wert, untere_grenze, obere_grenze))
+
+    fig = go.Figure()
+
+    # Blutzuckerlinie
+    fig.add_trace(go.Scatter(
+        x=data_df['timestamp'],
+        y=data_df['blutzuckerwert'],
+        mode='lines+markers',
+        marker=dict(color=[farben[b] for b in data_df['bereich']]),
+        name='Blutzuckerwert',
+        hovertemplate='Zeit: %{x}<br>Wert: %{y} mmol/L<extra></extra>'
+    ))
+
+    # Zielbereich als Hintergrundband
+    fig.add_shape(type="rect",
+                  xref="paper", yref="y",
+                  x0=0, x1=1,
+                  y0=untere_grenze, y1=obere_grenze,
+                  fillcolor="lightgreen", opacity=0.2,
+                  layer="below", line_width=0)
+
+    # Layout-Anpassungen
+    fig.update_layout(
+        title="Verlauf der Blutzuckerwerte mit Zielbereich",
+        xaxis_title="Zeit",
+        yaxis_title="Blutzucker (mmol/L)",
+        hovermode="x unified",
+        height=500
+    )
+
+    return fig

@@ -9,9 +9,7 @@ from datetime import datetime
 from utils.data_manager import DataManager
 from functions.Blutzuckertagebuch import (
     load_blutzuckertagebuch,
-    save_blutzuckertagebuch,
     add_entry,
-    add_manual_entry,
     check_blutzuckerwert,
 )
 
@@ -34,8 +32,8 @@ with st.form("blutzuckertagebuch_form"):
     speichern = st.form_submit_button("Speichern")
 
 if speichern:
-    tagebuch_df = add_entry(tagebuch_df, aktueller_blutzuckerwert)
-    save_blutzuckertagebuch(data_manager, tagebuch_df, "Blutzuckertagebuch")
+    # Füge den neuen Eintrag hinzu
+    add_entry(data_manager, "Blutzuckertagebuch", aktueller_blutzuckerwert)
     st.success("Eintrag erfolgreich gespeichert!")
 
     # Zugriff auf die unteren und oberen Grenzen aus den Einstellungen
@@ -57,13 +55,18 @@ if st.button("Zum 🧮 Insulinbolus-Rechner"):
 # Eingabefeld zur Nacherfassung eines Blutzuckerwerts
 st.subheader("Blutzuckerwert nacherfassen")
 with st.form("nacherfassung_form"):
-    nacherfassen_blutzuckerwert = st.number_input("Blutzuckerwert (mmol/L)", value=5.5, step=0.1, key="nacherfassen_blutzuckerwert")
-    nacherfassen_datum = st.date_input("Datum", value=datetime.now().date(), key="nacherfassen_datum")
-    nacherfassen_uhrzeit = st.time_input("Uhrzeit", value=datetime.now().time(), key="nacherfassen_uhrzeit")
-    nacherfassen_speichern = st.form_submit_button("Nacherfassen")
+    nacherfassungswert = st.number_input("Blutzuckerwert (mmol/L)", value=5.5, step=0.1, key="nacherfassungswert")
+    nacherfassungsdatum = st.date_input("Datum", key="nacherfassungsdatum")
+    nacherfassungszeit = st.time_input("Uhrzeit", key="nacherfassungszeit")
+    nacherfassen = st.form_submit_button("Nacherfassen")
 
-if nacherfassen_speichern:
-    tagebuch_df = add_manual_entry(tagebuch_df, nacherfassen_blutzuckerwert, nacherfassen_datum, nacherfassen_uhrzeit)
-    save_blutzuckertagebuch(data_manager, tagebuch_df, "Blutzuckertagebuch")
+if nacherfassen:
+    # Kombiniere Datum und Uhrzeit zu einem Timestamp
+    timestamp = datetime.combine(nacherfassungsdatum, nacherfassungszeit)
+    neuer_eintrag = {"timestamp": timestamp, "blutzuckerwert": nacherfassungswert}
+
+    # Füge den neuen Eintrag hinzu
+    data_manager.append_record("Blutzuckertagebuch", neuer_eintrag)
     st.success("Nacherfassung erfolgreich gespeichert!")
+
 

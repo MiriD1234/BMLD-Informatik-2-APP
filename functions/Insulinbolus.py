@@ -1,6 +1,7 @@
 from utils import helpers
 from datetime import datetime, timedelta
 import pandas as pd
+import plotly.graph_objects as go
 
 def berechne_korrektur_bolus(aktueller_wert, zielwert, korrekturfaktor):
     if korrekturfaktor <= 0:
@@ -84,3 +85,35 @@ def berechne_aktives_insulin(letzte_dosis_df, wirkdauer_insulin):
         else:
             return letzte_dosis["gerundeter_gesamt_bolus"]
     return 0  # Keine Dosis erfasst, daher kein aktives Insulin
+
+def create_insulin_dose_figure(dosis_df):
+    """
+    Erstellt eine interaktive Grafik zur Darstellung der verabreichten Insulin-Dosen.
+    """
+    if dosis_df.empty:
+        raise ValueError("Keine Daten für die Insulin-Dosen verfügbar.")
+
+    # Sortiere die Daten nach Timestamp
+    dosis_df = dosis_df.sort_values(by="timestamp")
+
+    fig = go.Figure()
+
+    # Insulin-Dosen als Balkendiagramm
+    fig.add_trace(go.Bar(
+        x=dosis_df["timestamp"],
+        y=dosis_df["gerundeter_gesamt_bolus"],
+        name="Insulin-Dosen",
+        marker_color="blue",
+        hovertemplate="Zeit: %{x}<br>Dosis: %{y} IE<extra></extra>"
+    ))
+
+    # Layout-Anpassungen
+    fig.update_layout(
+        title="Verlauf der verabreichten Insulin-Dosen",
+        xaxis_title="Zeit",
+        yaxis_title="Insulin-Dosis (IE)",
+        hovermode="x unified",
+        height=500
+    )
+
+    return fig
