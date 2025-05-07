@@ -21,7 +21,7 @@ data_manager = DataManager()
 # Lade das Blutzuckertagebuch
 data_df = st.session_state['Blutzuckertagebuch']
 if data_df.empty:
-    st.info('Keine Potenzrechner Daten vorhanden. Berechnen Sie die Potenz im Potenzrechner.')
+    st.info('Keine Blutzucker Daten vorhanden. Bitte fügen Sie Blutzuckerwerte hinzu.')
     st.stop()
 
 # Sortiere die Daten nach timestamp

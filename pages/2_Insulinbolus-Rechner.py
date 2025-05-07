@@ -18,6 +18,8 @@ from functions.Insulinbolus import (
 )
 from datetime import datetime, timedelta
 
+st.title("🧮 Insulinbolus-Rechner")
+
 # Erstelle eine Instanz von DataManager
 data_manager = DataManager()
 
