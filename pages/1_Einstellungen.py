@@ -3,15 +3,12 @@ from utils.login_manager import LoginManager
 import streamlit as st
 col3, col4, col5, col6= st.columns(4)
 
-# ====== Start Login Block ======
-from utils.login_manager import LoginManager
 with col6:
     LoginManager().go_to_login('Start.py') 
 # ====== End Login Block ======
 with col3:
     if st.button("🏠 Home"):
         st.switch_page("Start.py")
-# ====== End Login Block ======
 
 
 import streamlit as st
@@ -20,13 +17,6 @@ from utils.data_manager import DataManager
 st.title("⚙️ Einstellungen")
 
 data_manager = DataManager()
-
-# Lade die gespeicherten Einstellungen (nur beim ersten Mal)
-data_manager.load_user_data(
-    session_state_key="user_settings",
-    file_name="einstellungen.json",
-    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1, "wirkdauer_insulin": 4, "untere_grenze": 4.0, "obere_grenze": 8.0}
-)
 
 # Zugriff auf die gespeicherten Werte
 user_settings = st.session_state["user_settings"]
@@ -47,7 +37,7 @@ bolusfaktor_3 = st.number_input("Bolusfaktor für 17:00-23:59 Uhr (IE pro 10g KH
 st.subheader("Insulin")
 wirkdauer_insulin = st.number_input(
     "Wirkdauer Insulin in Stunden", 
-    value=user_settings.get("wirkdauer_insulin", 4),  # Standardwert: 4 Stunden
+    value=user_settings.get("wirkdauer_insulin", 4), 
     step=1
 )
 minimaler_bolusschritt = st.selectbox("Minimaler Bolusschritt (IE)", [0.05, 0.1, 0.2, 0.5])

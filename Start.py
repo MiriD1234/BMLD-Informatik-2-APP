@@ -17,12 +17,19 @@ data_manager.load_user_data(
     initial_value=pd.DataFrame(),
     parse_dates=["timestamp"],
     )
+
 data_manager.load_user_data(
     session_state_key="Blutzuckertagebuch",
     file_name="blutzuckertagebuch.csv",
     initial_value=pd.DataFrame(),
     parse_dates=["timestamp"],
     )
+
+data_manager.load_user_data(
+    session_state_key="user_settings",
+    file_name="einstellungen.json",
+    initial_value={"zielwert": 5.5, "korrekturfaktor": 0.0, "zeitfenster_bolusfaktoren": {"00:00-10:59": 0.0, "11:00-16:59": 0.0, "17:00-23:59": 0.0}, "minimaler_bolusschritt": 0.1, "wirkdauer_insulin": 4, "untere_grenze": 4.0, "obere_grenze": 8.0}
+)
 # ====== End Init Block ======
 
 import streamlit as st
