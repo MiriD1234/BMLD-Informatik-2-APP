@@ -35,12 +35,7 @@ if data_df.empty:
 # Sortiere die Daten nach timestamp
 data_df = data_df.sort_values(by='timestamp')
 
-# Lade Benutzereinstellungen (Grenzwerte)
-data_manager.load_user_data(
-    session_state_key="user_settings",
-    file_name="einstellungen.json",
-    initial_value={"untere_grenze": 4.0, "obere_grenze": 8.0}
-)
+
 user_settings = st.session_state["user_settings"]
 untere_grenze = user_settings.get("untere_grenze", 4.0)
 obere_grenze = user_settings.get("obere_grenze", 8.0)
