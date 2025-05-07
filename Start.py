@@ -17,7 +17,12 @@ data_manager.load_user_data(
     initial_value=pd.DataFrame(),
     parse_dates=["timestamp"],
     )
-
+data_manager.load_user_data(
+    session_state_key="Blutzuckertagebuch",
+    file_name="blutzuckertagebuch.csv",
+    initial_value=pd.DataFrame(),
+    parse_dates=["timestamp"],
+    )
 # ====== End Init Block ======
 
 import streamlit as st
