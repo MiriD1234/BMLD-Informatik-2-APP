@@ -1,7 +1,14 @@
+import streamlit as st
+col3, col4, col5, col6= st.columns(4)
+
 # ====== Start Login Block ======
 from utils.login_manager import LoginManager
-LoginManager().go_to_login('Start.py') 
+with col6:
+    LoginManager().go_to_login('Start.py') 
 # ====== End Login Block ======
+with col3:
+    if st.button("🏠 Home"):
+        st.switch_page("Start.py")
 
 import streamlit as st
 import pandas as pd
@@ -128,9 +135,6 @@ if st.session_state.get("berechnung_durchgefuehrt", False):
             # Speichere das Dictionary in der Session State
             data_manager.append_record(session_state_key="dosis_erfassung", record_dict=st.session_state["berechnung_ergebnisse"])
             st.success("✅ Dosis erfolgreich erfasst!")
-
-if st.button("🏠 Home"):
-    st.switch_page("Start.py")
 
 
 

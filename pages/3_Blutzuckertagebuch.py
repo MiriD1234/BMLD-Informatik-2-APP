@@ -1,6 +1,16 @@
 # ====== Start Login Block ======
 from utils.login_manager import LoginManager
-LoginManager().go_to_login('Start.py') 
+import streamlit as st
+col3, col4, col5, col6 = st.columns(4)
+
+# ====== Start Login Block ======
+from utils.login_manager import LoginManager
+with col6:
+    LoginManager().go_to_login('Start.py') 
+# ====== End Login Block ======
+with col3:
+    if st.button("🏠 Home"):
+        st.switch_page("Start.py")
 # ====== End Login Block ======
 
 import streamlit as st
@@ -68,7 +78,4 @@ if nacherfassen:
     # Füge den neuen Eintrag hinzu
     data_manager.append_record("Blutzuckertagebuch", neuer_eintrag)
     st.success("Nacherfassung erfolgreich gespeichert!")
-
-if st.button("🏠 Home"):
-    st.switch_page("Start.py")
 
