@@ -9,7 +9,7 @@ data_manager = DataManager(fs_protocol='webdav', fs_root_folder="BMLD_GlucoBuddy
 
 # initialize the login manager
 login_manager = LoginManager(data_manager)
-login_manager.login_register()  # open login/register page
+login_manager.login_register()
 
 # Überprüfen, ob der Benutzer eingeloggt ist
 if st.session_state.get("authentication_status") is True:
