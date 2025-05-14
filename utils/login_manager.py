@@ -102,7 +102,7 @@ class LoginManager:
             if st.session_state["authentication_status"] is False:
                 st.error("Username/password is incorrect")
             else:
-                st.warning("Please enter your username and password")
+                st.warning("Bitte geben Sie Ihren Nutzernamen und Ihr Passwort ein.")
             if stop:
                 st.stop()
 
@@ -118,8 +118,8 @@ class LoginManager:
             self.authenticator.logout()
         else:
             st.info("""
-            The password must be 8-20 characters long and include at least one uppercase letter, 
-            one lowercase letter, one digit, and one special character from @$!%*?&.
+            Das Passwort muss zwischen 8 und 20 Zeichen lang sein und mindestens einen Großbuchstaben,
+            einen Kleinbuchstaben, eine Ziffer und ein Sonderzeichen aus @$!%*?& enthalten.
             """)
             res = self.authenticator.register_user()
             if res[1] is not None:
