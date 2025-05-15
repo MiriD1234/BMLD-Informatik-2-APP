@@ -52,3 +52,16 @@ if st.button("⚙️ Einstellungen"):
     st.switch_page("pages/1_Einstellungen.py")
 
 st.info("""Diese App ersetzt keine medizinische Beratung. Änderungen Ihrer Therapie sollten nur in Absprache mit Ihrem Arzt erfolgen.""")
+
+# Erklärung wichtiger Begriffe
+st.subheader("ℹ️ Wichtige Begriffe")
+st.markdown("""
+- **Blutzuckerwert (mmol/L):** Der aktuelle Zuckergehalt im Blut, gemessen in Millimol pro Liter. Ein normaler Bereich liegt typischerweise zwischen 4.0 und 8.0 mmol/L.
+- **Insulinbolus:** Eine zusätzliche Insulindosis, die vor Mahlzeiten oder zur Korrektur eines hohen Blutzuckerspiegels verabreicht wird.
+- **Bolusfaktor:** Gibt an, wie viel Insulin pro 10 g Kohlenhydrate benötigt wird.
+- **Korrekturfaktor:** Gibt an, um wie viel mmol/l der Blutzucker durch eine Einheit Insulin gesenkt wird.
+- **HbA1c:** Der HbA1c-Wert wird verwendet, um den Blutzuckerspiegel der letzten 3 Monate zu beurteilen.
+            Ein höherer HbA1c-Wert bedeutet, dass der Blutzucker über einen längeren Zeitraum erhöht war. 
+- **Wirkdauer Insulin:** Die Zeit, in der das Insulin aktiv im Körper wirkt.
+- **Minimaler Bolusschritt:** Die kleinste Menge Insulin, die verabreicht werden kann.
+""")
