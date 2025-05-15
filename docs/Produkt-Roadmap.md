@@ -22,7 +22,7 @@ Formel: (aktueller BZ – BZ-Zielwert) / Korrekturfaktor + (KH in g/10g = #KE) *
 *(geplant: 2h // effektiv: 2h)*
 - Export der Grafiken BZ-Werte und Insulindosen als zB. PDF -> Export als PNG implementiert
 *(geplant: 1h // effektiv: 0.5h)*
-- Logo der App generieren und hinzufügen
+- Logo der App generieren und hinzufügen (Logo mittels https://logo.com/ generiert)
 *(geplant: 1h // effektiv: 1h)*
 - "Passwort vergessen" im Login Fenster  
 *(geplant: 1h)*
