@@ -65,3 +65,10 @@ st.markdown("""
 - **Wirkdauer Insulin:** Die Zeit, in der das Insulin aktiv im Körper wirkt.
 - **Minimaler Bolusschritt:** Die kleinste Menge Insulin, die verabreicht werden kann.
 """)
+
+# Formel zur Bolusberechnung
+st.subheader("Formel zur Bolusberechnung")
+st.markdown(""" Die Berechnung des Insulinbolus erfolgt mit der folgenden Formel:""")
+st.latex(r"""
+    \frac{\text{aktueller Blutzucker} - \text{Blutzucker-Zielwert}}{\text{Korrekturfaktor}} + \frac{\text{Kohlenhydrate in g}}{10} \cdot \text{Bolusfaktor} - \text{aktives Insulin}
+""")
