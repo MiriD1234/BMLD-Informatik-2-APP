@@ -1,6 +1,7 @@
 # ====== Start Login Block ======
 from utils.login_manager import LoginManager
 import streamlit as st
+
 col3, col4, col5, col6= st.columns(4)
 
 with col6:
@@ -10,12 +11,11 @@ with col3:
     if st.button("🏠 Home"):
         st.switch_page("Start.py")
 
-
-import streamlit as st
 from utils.data_manager import DataManager
 
 st.title("⚙️ Einstellungen")
 
+# Initialisiere den DataManager
 data_manager = DataManager()
 
 # Zugriff auf die gespeicherten Werte

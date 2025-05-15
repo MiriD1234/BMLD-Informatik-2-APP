@@ -13,7 +13,7 @@ login_manager.login_register()
 
 # Überprüfen, ob der Benutzer eingeloggt ist
 if st.session_state.get("authentication_status") is True:
-    # load the data from the persistent storage into the session state
+    # laden der nutzerspezifischen Daten von Switchdrive in die session state
     data_manager.load_user_data(
         session_state_key="dosis_erfassung",
         file_name="dosis_erfassung.csv",
@@ -36,8 +36,6 @@ if st.session_state.get("authentication_status") is True:
 else:
     st.warning("Bitte loggen Sie sich ein, um auf Ihre Daten zuzugreifen.")
 # ====== End Init Block ======
-
-import streamlit as st
 
 st.image("docs/Fotos/Logo_Version_1.jpg", width=400)
 

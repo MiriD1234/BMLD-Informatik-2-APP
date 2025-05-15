@@ -10,8 +10,6 @@ with col3:
     if st.button("🏠 Home"):
         st.switch_page("Start.py")
 
-
-import streamlit as st
 import pandas as pd
 from utils.data_manager import DataManager
 from utils import helpers
@@ -28,7 +26,7 @@ from datetime import datetime, timedelta
 
 st.title("🧮 Insulinbolus-Rechner")
 
-# Erstelle eine Instanz von DataManager
+# Initialisiere den DataManager
 data_manager = DataManager()
 
 # Standardwerte für die Einstellungen

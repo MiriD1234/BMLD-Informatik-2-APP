@@ -11,7 +11,6 @@ with col3:
         st.switch_page("Start.py")
 
 
-import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 from utils.data_manager import DataManager
@@ -40,7 +39,7 @@ user_settings = st.session_state["user_settings"]
 untere_grenze = user_settings.get("untere_grenze", 4.0)
 obere_grenze = user_settings.get("obere_grenze", 8.0)
 
-# Erstelle die Grafik
+# Erstelle die Grafik des Blutzuckertagebuchs
 fig = create_blutzucker_figure(data_df, untere_grenze, obere_grenze)
 
 # Anzeige in Streamlit
