@@ -1,4 +1,4 @@
-# BMLD-Informatik-2-APP: Blutzucker-Tagebuch und Insulin Bolusrechner "GlucoBuddy"
+# BMLD-Informatik-2-APP: Blutzucker-Tagebuch und Insulin Bolusrechner "Glucobuddy"
 
 Diese App dient als digitales Blutzucker-Tagebuch und unterstützt Menschen mit Typ-1-Diabetes bei der täglichen Selbstkontrolle sowie bei der Berechnung der Insulindosis. Der Nutzer kann den aktuell gemessenen Blutzuckerwert in die App eingeben. Daraufhin gibt die App eine direkte Rückmeldung, ob der Wert im gewünschten Zielbereich liegt oder ob eine Korrektur notwendig ist. Ist der Wert zu hoch, verweist die App auf einen integrierten Insulinrechner, mit dem sich die benötigte Korrektur-Insulindosis basierend auf individuellen Parametern berechnen lässt. Bei zu niedrigen Blutzuckerwerten zeigt dies die App ebenfalls an.
 Alle eingegebenen Blutzuckerwerte sowie die verabreichten Insulindosen werden gespeichert und über einen bestimmten Zeitraum hinweg grafisch dargestellt. Diese Verlaufsgrafiken helfen dem Nutzer, Muster und Zusammenhänge zu erkennen und können bei Bedarf als Datei exportiert werden – beispielsweise für die Besprechung mit dem behandelnden Arzt oder zur eigenen Dokumentation.
