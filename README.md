@@ -5,6 +5,8 @@ Alle eingegebenen Blutzuckerwerte sowie die verabreichten Insulindosen werden ge
 Zusätzlich bietet die App eine Funktion zur Abschätzung des HbA1c-Werts. Dieser kann auf Basis der durchschnittlichen Blutzuckerwerte der letzten drei Monate berechnet werden und liefert eine Orientierung über die Qualität der Blutzuckereinstellung. Auf diese Weise wird der Nutzer nicht nur bei der täglichen Steuerung seines Diabetes unterstützt, sondern erhält auch langfristige Rückmeldungen zur allgemeinen Stoffwechseleinstellung.
 Die App richtet sich insbesondere an Typ-1-Diabetiker, die ihre Werte regelmässig dokumentieren, bei der Insulindosis-Berechnung Unterstützung benötigen und ihre Daten übersichtlich sowie professionell aufbereitet nutzen möchten.
 
+**Glucobuddy - Weil gutes Diabetesmanagement digital, einfach und  alltagstauglich sein sollte.**
+
 Link zur Streamlit-App: https://bmld-informatik-2-app-glucobuddy.streamlit.app/ 
 
 Autoren:
